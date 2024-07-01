@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 git branch: 'main', 
-                    url: 'https://github.com/your-username/your-repo.git' 
+                    url: 'https://github.com/tsega19/JenkinsTest.git' 
             }
         }
         stage('Build and Dockerize') {
