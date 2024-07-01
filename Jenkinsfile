@@ -4,8 +4,7 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                git branch: 'master', 
-                    credentialsId: 'your-git-credentials-id',
+                git branch: 'main', 
                     url: 'https://github.com/your-username/your-repo.git' 
             }
         }
@@ -17,7 +16,7 @@ pipeline {
                 docker {
                     image 'docker/buildx:latest' 
                     build {
-                        outputs: ['my-react-app:latest'] 
+                        outputs: ['JenkinsTest:latest'] 
                         file: 'Dockerfile'
                     }
                 }
