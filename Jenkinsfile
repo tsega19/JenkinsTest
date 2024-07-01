@@ -10,7 +10,7 @@ pipeline {
         stage('Build and Dockerize') {
             steps {
                 script {
-                    // Build the project
+                    // Install dependencies and build the project
                     sh 'npm install'
                     sh 'npm run build'
 
@@ -21,7 +21,8 @@ pipeline {
         }
         stage('Deploy to Ingress (Optional)') {
             steps {
-                // Deployment steps go here
+                echo 'This stage is optional and can be filled with deployment steps.'
+                // Add deployment steps here when needed
             }
         }
     }
