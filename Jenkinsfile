@@ -1,8 +1,8 @@
 pipeline {
     agent any
-   
+
     stages {
-        stage('Checkout Code') {
+        stage('Checkout') {
             steps {
                 git branch: 'main', url: 'https://github.com/tsega19/JenkinsTest.git'
             }
@@ -10,26 +10,26 @@ pipeline {
         stage('Build and Dockerize') {
             steps {
                 script {
-                    // Install dependencies and build the project
-                    sh 'npm install'
-                    sh 'npm run build'
-
-                    // Build the Docker image
-                    def customImage = docker.build('JenkinsTest:latest', '-f Dockerfile .')
+                    docker.image('node:16').inside {
+                        sh 'npm install'
+                        sh 'npm run build'
+                    }
                 }
             }
         }
         stage('Deploy to Ingress (Optional)') {
+            when {
+                expression { return false } // Adjust condition for deployment
+            }
             steps {
-                echo 'This stage is optional and can be filled with deployment steps.'
-                // Add deployment steps here when needed
+                echo 'Deploying to Ingress...'
             }
         }
     }
 
     post {
-        success {
-            echo 'Pipeline succeeded!'
+        always {
+            echo 'Pipeline finished'
         }
         failure {
             echo 'Pipeline failed :('
